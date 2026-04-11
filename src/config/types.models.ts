@@ -7,7 +7,9 @@ export const MODEL_APIS = [
   "openai-responses",
   "openai-codex-responses",
   "anthropic-messages",
+  /** @deprecated Use google-genai instead. */
   "google-generative-ai",
+  "google-genai",
   "github-copilot",
   "bedrock-converse-stream",
   "ollama",

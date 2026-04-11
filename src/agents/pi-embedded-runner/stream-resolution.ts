@@ -118,7 +118,7 @@ export function resolveEmbeddedAgentStreamFn(params: {
     return createAnthropicVertexStreamFnForModel(params.model);
   }
 
-  if (params.model.provider === "google-genai") {
+  if (params.model.provider === "google-genai" || params.model.provider === "google-generative-ai") {
     return createGoogleGenAiStreamFnForModel(params.model);
   }
 

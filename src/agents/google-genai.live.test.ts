@@ -1,4 +1,4 @@
-import { describe, expect, it, beforeAll, afterAll } from "vitest";
+import { describe, expect, it, beforeAll, afterAll, vi } from "vitest";
 import { createGoogleGenAiStreamFnForModel } from "./google-genai-stream.js";
 import { isLiveTestEnabled } from "./live-test-helpers.js";
 
@@ -100,5 +100,21 @@ describeLive("google-genai live tests", () => {
         }
       }
     }, 20000);
+  });
+
+  describe("Migration Fallback", () => {
+    it("warns and falls back to google-genai when using google-generative-ai", async () => {
+      const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      
+      const streamFn = createGoogleGenAiStreamFnForModel({
+        id: TEST_MODEL,
+        provider: "google-generative-ai",
+      });
+      
+      expect(streamFn).toBeDefined();
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("deprecated"));
+      
+      warnSpy.mockRestore();
+    });
   });
 });

@@ -15,6 +15,12 @@ export function createGoogleGenAiStreamFnForModel(
   model: { id: string; provider: string; baseUrl?: string; vertexai?: { project?: string; location?: string } },
   env: NodeJS.ProcessEnv = process.env,
 ): StreamFn {
+  if (model.provider === "google-generative-ai") {
+    console.warn(
+      "⚠️ Provider 'google-generative-ai' is deprecated and will be removed in a future release. " +
+        "Please update your configuration to use 'google-genai'.",
+    );
+  }
   return (rawModel: unknown, context: Context, options?: SimpleStreamOptions) => {
     const { eventStream, stream } = createWritableTransportEventStream();
 
