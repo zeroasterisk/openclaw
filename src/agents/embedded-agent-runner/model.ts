@@ -333,6 +333,21 @@ function resolveConfiguredProviderDefaultApi(
   return providerConfig?.baseUrl ? "openai-completions" : undefined;
 }
 
+/**
+ * Map well-known provider names to their native API transport type.
+ * This ensures that manually-configured models under a provider like
+ * "google-vertex" use the correct transport without requiring an explicit
+ * "api" field in the provider or model config.
+ */
+function resolveProviderNameDefaultApi(provider: string): Api | undefined {
+  switch (provider) {
+    case "google-vertex":
+      return "google-vertex";
+    default:
+      return undefined;
+  }
+}
+
 function resolveProviderRequestTimeoutMs(timeoutSeconds: unknown): number | undefined {
   if (
     typeof timeoutSeconds !== "number" ||
@@ -682,6 +697,7 @@ function applyConfiguredProviderOverrides(params: {
       resolvedTransport.api ??
       normalizeResolvedTransportApi(discoveredModel.api) ??
       resolveConfiguredProviderDefaultApi(providerConfig) ??
+      resolveProviderNameDefaultApi(params.provider) ??
       "openai-responses",
     baseUrl: resolvedTransport.baseUrl ?? discoveredModel.baseUrl,
     discoveredHeaders,
@@ -942,6 +958,7 @@ function resolveConfiguredFallbackModel(params: {
     api:
       normalizeResolvedTransportApi(configuredModel?.api) ??
       resolveConfiguredProviderDefaultApi(providerConfig) ??
+      resolveProviderNameDefaultApi(provider) ??
       "openai-responses",
     baseUrl: configuredModel?.baseUrl ?? providerConfig?.baseUrl,
     cfg,
