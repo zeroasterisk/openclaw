@@ -1404,6 +1404,7 @@
                   "providers/fireworks",
                   "providers/github-copilot",
                   "providers/google",
+                  "providers/google-vertex",
                   "providers/gradium",
                   "providers/groq",
                   "providers/huggingface",
