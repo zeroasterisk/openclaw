@@ -33,37 +33,3 @@ export function buildGoogleStaticCatalogProvider(): ModelProviderConfig {
     models: GOOGLE_GEMINI_TEXT_MODELS,
   };
 }
-
-const GOOGLE_VERTEX_LATEST_ALIASES: ModelDefinitionConfig[] = [
-  {
-    id: "gemini-flash-latest",
-    name: "Gemini Flash (latest)",
-    reasoning: true,
-    input: ["text", "image"],
-    contextWindow: 1_048_576,
-    maxTokens: 65_536,
-    tags: ["default"],
-  },
-  {
-    id: "gemini-pro-latest",
-    name: "Gemini Pro (latest)",
-    reasoning: true,
-    input: ["text", "image"],
-    contextWindow: 1_048_576,
-    maxTokens: 65_536,
-  },
-  {
-    id: "gemini-flash-lite-latest",
-    name: "Gemini Flash-Lite (latest)",
-    input: ["text", "image"],
-    contextWindow: 1_048_576,
-    maxTokens: 65_536,
-  },
-];
-
-export function buildGoogleVertexStaticCatalogProvider(): ModelProviderConfig {
-  return {
-    api: "google-vertex",
-    models: [...GOOGLE_VERTEX_LATEST_ALIASES, ...GOOGLE_GEMINI_TEXT_MODELS],
-  };
-}
