@@ -44,7 +44,12 @@ export function buildGoogleProvider(): ProviderPlugin {
         },
       }),
     ],
-    normalizeTransport: ({ api, baseUrl }) => resolveGoogleGenerativeAiTransport({ api, baseUrl }),
+    normalizeTransport: ({ api, baseUrl, provider }) => {
+      if (provider === "google-vertex" && !api) {
+        return { api: "google-vertex" as const, baseUrl };
+      }
+      return resolveGoogleGenerativeAiTransport({ api, baseUrl });
+    },
     normalizeConfig: ({ provider, providerConfig }) =>
       normalizeGoogleProviderConfig(provider, providerConfig),
     staticCatalog: {
