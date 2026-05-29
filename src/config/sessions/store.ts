@@ -27,6 +27,7 @@ import {
   dropSessionStoreObjectCache,
   dropSessionStoreSnapshotCache,
   getSerializedSessionStore,
+  getSessionStoreCacheVersion,
   invalidateSessionStoreCache,
   isSessionStoreCacheEnabled,
   setSerializedSessionStore,
@@ -113,7 +114,8 @@ export function readSessionUpdatedAt(params: {
   sessionKey: string;
 }): number | undefined {
   try {
-    return readSessionEntry(params.storePath, params.sessionKey)?.updatedAt;
+    const store = loadSessionStore(params.storePath, { clone: false });
+    return resolveSessionStoreEntry({ store, sessionKey: params.sessionKey }).existing?.updatedAt;
   } catch {
     return undefined;
   }
@@ -135,6 +137,7 @@ export type SessionMaintenanceApplyReport = {
 export {
   capEntryCount,
   getActiveSessionMaintenanceWarning,
+  getSessionStoreCacheVersion,
   pruneStaleEntries,
   resolveMaintenanceConfig,
 };
