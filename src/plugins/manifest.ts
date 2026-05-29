@@ -1852,6 +1852,10 @@ export type OpenClawPackageSetupFeatures = {
   legacySessionSurfaces?: boolean;
 };
 
+export type OpenClawPackageCompat = {
+  pluginApi?: string;
+};
+
 export type OpenClawPackageManifest = {
   extensions?: string[];
   runtimeExtensions?: string[];
@@ -1863,6 +1867,7 @@ export type OpenClawPackageManifest = {
     label?: string;
   };
   channel?: PluginPackageChannel;
+  compat?: OpenClawPackageCompat;
   install?: PluginPackageInstall;
   startup?: OpenClawPackageStartup;
 };
